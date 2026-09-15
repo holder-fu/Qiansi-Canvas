@@ -1,0 +1,96 @@
+# Dependencies
+node_modules/
+
+# Build and test output
+dist/
+dist-ssr/
+coverage/
+artifacts/
+test-results/
+playwright-report/
+.vitest/
+*.tsbuildinfo
+oxlint-report.json
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Local Qiansi-Canvas runtime data
+#
+# This directory can contain projects, imported/generated media, encrypted
+# credentials, machine-specific indexes, plugins and local model packages.
+# Keep everything ignored except the exact curated theme starter files required
+# by a clean public checkout. User-added themes in the same folder stay ignored.
+/data/*
+!/data/canvas-themes/
+/data/canvas-themes/*
+!/data/canvas-themes/README.md
+!/data/canvas-themes/Qiansi-Dream-Pink.theme.json
+!/data/canvas-themes/Qiansi-Dream-Pink.zip
+!/data/canvas-themes/Qiansi-macOS-Dark.zip
+
+# Plugins, including Qiansi Audio Studio, are independent release units.
+# Qiansi-Canvas source and Release packages do not publish data/plugins/**.
+
+# The local Prompt Library may contain user-sampled media frames. Public source
+# distributions use the empty, licensed seed and never publish those frames.
+/public/prompt-library/library.json
+/public/prompt-library/thumbnails/
+
+# Local development and agent scratch data
+/.codex-tmp/
+/.tmp/
+/.tmp-*/
+/.tmp-trusted-dev/
+/.cache/
+tmp/
+temp/
+*.tmp
+*.bak
+
+# Portable Windows media binaries are distributed separately from source.
+# Keep the provenance and checksum documents in tools/ tracked.
+/tools/ffmpeg.exe
+/tools/ffprobe.exe
+
+# Project-local runtimes and package caches are installation products. They
+# live under tools/ instead of user data, but are not source-controlled.
+/tools/runtime/
+/tools/cache/
+
+# Local environment and credential files
+.env
+.env.*
+!.env.example
+*.local
+*.pem
+*.key
+*.p12
+*.pfx
+.credential-key
+credentials.vault
+
+# Python caches and local virtual environments used by optional plugins
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Editors and operating systems
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

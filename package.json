@@ -1,0 +1,71 @@
+{
+  "name": "qiansi-canvas",
+  "private": true,
+  "version": "1.64.10",
+  "author": "holder (老树苗)",
+  "license": "GPL-3.0-or-later OR LicenseRef-Qiansi-Commercial",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "node dev-server.mjs",
+    "dev:canvas": "node dev-server.mjs",
+    "dev:web": "vite",
+    "build": "tsc -b && node scripts/build-web.mjs",
+    "build:check": "tsc -b && node scripts/build-web.mjs --check",
+    "test": "npm run test:unit && npm run test:contracts",
+    "test:unit": "vitest run",
+    "test:contracts": "node scripts/run-node-contract-tests.mjs",
+    "test:ci": "npm test",
+    "lint": "oxlint",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx}\"",
+    "typecheck": "tsc -b --noEmit",
+    "quality": "node scripts/check-font-size-gate.mjs && oxlint && tsc -b --noEmit",
+    "check:font-gate": "node scripts/check-font-size-gate.mjs",
+    "release:portable": "node scripts/build-portable-release.mjs",
+    "release:portable:verify": "node scripts/verify-portable-release.mjs",
+    "release:portable:smoke": "node scripts/smoke-portable-release.mjs",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "prettier --write",
+      "oxlint"
+    ]
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^3.8.1",
+    "@lobehub/icons-static-svg": "^1.94.0",
+    "@mediapipe/tasks-vision": "^1.0.1",
+    "@pixiv/three-vrm": "^3.5.5",
+    "@xyflow/react": "^12.11.2",
+    "fflate": "^0.8.3",
+    "lucide-react": "^1.28.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "three": "^0.181.1",
+    "zustand": "^5.0.14"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@types/three": "^0.181.0",
+    "@vitejs/plugin-react": "^6.0.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.3.0",
+    "oxlint": "^1.75.0",
+    "prettier": "^3.9.6",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~6.0.2",
+    "vite": "^8.2.0",
+    "vitest": "^4.1.10"
+  },
+  "overrides": {
+    "nanoid": "3.3.18",
+    "sharp": "0.35.4"
+  }
+}

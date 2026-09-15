@@ -1,0 +1,24 @@
+{
+  "kind": "qiansi-canvas-theme",
+  "schemaVersion": 1,
+  "id": "qiansi-dream-pink",
+  "name": "绯梦紫粉",
+  "version": "1.1.0",
+  "author": "Qiansi-Canvas",
+  "description": "低亮度灰紫画布与面板、莓粉强调、柔和分层与甜心圆角组成的舒适全局风格。",
+  "createdAt": "2026-08-13T00:00:00.000Z",
+  "tokens": {
+    "canvas": "#403443",
+    "card": "#58435e",
+    "panel": "#4b3952",
+    "edge": "#715978",
+    "edgeStrong": "#a77eaa",
+    "accent": "#c978b6",
+    "grid": "#68566c",
+    "gridVisible": true,
+    "gridGap": 24,
+    "gridSize": 1,
+    "interfaceStyle": "dream-pink",
+    "cursorStyle": "system"
+  }
+}

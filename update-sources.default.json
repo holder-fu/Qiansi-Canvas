@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": "github",
+      "name": "GitHub",
+      "manifestUrl": "https://raw.githubusercontent.com/holder-fu/Qiansi-Canvas/main/update.json",
+      "homepageUrl": "https://github.com/holder-fu/Qiansi-Canvas",
+      "enabled": true
+    },
+    {
+      "id": "modelscope",
+      "name": "ModelScope",
+      "manifestUrl": "https://www.modelscope.cn/api/v1/studio/holder2895/Qiansi-Canvas/repo?Revision=master&FilePath=update.json",
+      "homepageUrl": "https://www.modelscope.cn/studios/holder2895/Qiansi-Canvas",
+      "enabled": true
+    }
+  ]
+}
