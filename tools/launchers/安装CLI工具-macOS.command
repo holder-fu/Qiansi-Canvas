@@ -67,14 +67,16 @@ install_codex() {
 
 install_antigravity() {
   local installer
-  installer="$(mktemp "${TMPDIR:-/tmp}/qiansi-antigravity.XXXXXX.sh")" || fail '无法创建临时安装文件。'
+  installer="$(mktemp "${TMPDIR:-/tmp}/qiansi-antigravity.XXXXXX")" || fail '无法创建临时安装文件。'
   curl --fail --location --proto '=https' \
     --output "$installer" 'https://antigravity.google/cli/install.sh' || fail 'Antigravity CLI 安装器下载失败。'
   chmod 600 "$installer"
   printf '%s\n' '安全门禁：远程安装器已下载，但不会自动执行。'
   printf '文件：%s\nSHA-256：' "$installer"
   shasum -a 256 "$installer" || true
-  fail '请先检查脚本内容并与官方发布的校验值核对；确认可信后再手动执行。'
+  printf '%s\n' '请先检查脚本内容并与官方发布的校验值核对；确认可信后再手动执行。'
+  printf '%s\n' 'Antigravity CLI 尚未安装。'
+  return 0
 }
 
 install_gemini() {
@@ -85,14 +87,16 @@ install_gemini() {
 
 install_dreamina() {
   local installer
-  installer="$(mktemp "${TMPDIR:-/tmp}/qiansi-dreamina.XXXXXX.sh")" || fail '无法创建临时安装文件。'
+  installer="$(mktemp "${TMPDIR:-/tmp}/qiansi-dreamina.XXXXXX")" || fail '无法创建临时安装文件。'
   curl --fail --location --proto '=https' \
     --output "$installer" 'https://jimeng.jianying.com/cli' || fail 'Dreamina CLI 安装器下载失败。'
   chmod 600 "$installer"
   printf '%s\n' '安全门禁：远程安装器已下载，但不会自动执行。'
   printf '文件：%s\nSHA-256：' "$installer"
   shasum -a 256 "$installer" || true
-  fail '项目未内置官方固定哈希；请先检查脚本并从即梦官方渠道核验，再手动执行。'
+  printf '%s\n' '项目未内置官方固定哈希；请先检查脚本并从即梦官方渠道核验，再手动执行。'
+  printf '%s\n' 'Dreamina / 即梦 CLI 尚未安装。'
+  return 0
 }
 
 install_workbuddy() {
@@ -144,12 +148,12 @@ printf '%s\n' '  Qiansi-Canvas macOS CLI 工具安装器'
 printf '%s\n' '============================================================'
 printf '%s\n' '  [1] 山火 CLI（火山方舟官方 Ark CLI）'
 printf '%s\n' '  [2] 安装或更新 OpenAI Codex CLI'
-printf '%s\n' '  [3] 安装或更新 Google Antigravity CLI'
+printf '%s\n' '  [3] 下载 Google Antigravity 官方安装器（需人工核验）'
 printf '%s\n' '  [4] 安装或更新 Gemini CLI'
-printf '%s\n' '  [5] 安装或修复 Dreamina / 即梦 CLI'
+printf '%s\n' '  [5] 下载 Dreamina / 即梦安装器（需人工核验）'
 printf '%s\n' '  [6] 安装或更新 WorkBuddy CLI'
 printf '%s\n' '  [7] 安装或更新阿里云百炼 CLI'
-printf '%s\n' '  [8] 安装或更新以上全部工具'
+printf '%s\n' '  [8] 安装可验证的 CLI，并下载需人工核验的安装器'
 printf '%s\n' '  [0] 退出'
 printf '\n'
 read -r "CLI_CHOICE?请选择：[0-8] " </dev/tty || CLI_CHOICE='0'

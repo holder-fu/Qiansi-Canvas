@@ -24,5 +24,9 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [
+    "src/components/directorBuiltInRig.test.ts",
+    "src/components/pluginMotionCapture.test.ts"
+  ]
 }

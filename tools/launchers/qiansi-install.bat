@@ -53,12 +53,12 @@ echo ============================================================
 echo.
 echo   [1] 山火 CLI（火山方舟官方 Ark CLI）
 echo   [2] Install or update OpenAI Codex CLI
-echo   [3] Install Google Antigravity CLI
+echo   [3] Download the Google Antigravity installer for manual verification
 echo   [4] Install or update Gemini CLI
-echo   [5] Install or repair Dreamina / Jimeng CLI
+echo   [5] Download the Dreamina / Jimeng installer for manual verification
 echo   [6] Install or update WorkBuddy CLI
 echo   [7] Install or update Alibaba Model Studio / Bailian CLI
-echo   [8] Install Volcengine, Codex, Antigravity, Gemini, Dreamina, WorkBuddy, and Bailian
+echo   [8] Install verifiable CLIs and download installers that require manual review
 echo   [0] Exit
 echo.
 choice /c 123456780 /n /m "Select an option"
@@ -90,6 +90,8 @@ goto :afterCli
 
 :installGemini
 call npm.cmd install --global @google/gemini-cli@latest
+if errorlevel 1 goto :failed
+call :verifyGemini
 if errorlevel 1 goto :failed
 echo Gemini installed. Run gemini in a new terminal to sign in.
 goto :afterCli
@@ -134,7 +136,8 @@ echo The official Antigravity installer was downloaded but NOT executed:
 echo   %QIANSI_AGY_INSTALLER%
 echo Review its contents and verify its publisher or official checksum first.
 echo Then run it manually only if you trust the downloaded file.
-exit /b 1
+echo Antigravity CLI has NOT been installed.
+exit /b 0
 
 :installDreaminaTool
 where curl.exe >nul 2>nul
@@ -151,7 +154,8 @@ echo   %QIANSI_DREAMINA_INSTALLER%
 echo No publisher checksum is bundled with Qiansi-Canvas. Review the script and
 echo compare its SHA-256 with an official value before running it manually in Git Bash.
 echo This installer deliberately refuses to pipe a remote response into a shell.
-exit /b 1
+echo Dreamina / Jimeng CLI has NOT been installed.
+exit /b 0
 
 :installVolcengineTool
 echo.
@@ -175,6 +179,8 @@ if errorlevel 1 goto :failed
 call :verifyCodex
 if errorlevel 1 goto :failed
 call npm.cmd install --global @google/gemini-cli@latest
+if errorlevel 1 goto :failed
+call :verifyGemini
 if errorlevel 1 goto :failed
 call :installAntigravityTool
 if errorlevel 1 goto :failed
@@ -223,6 +229,28 @@ set "QIANSI_NPM_GLOBAL_PREFIX="
 for /f "delims=" %%I in ('npm.cmd prefix --global 2^>nul') do if not defined QIANSI_NPM_GLOBAL_PREFIX set "QIANSI_NPM_GLOBAL_PREFIX=%%~fI"
 if defined QIANSI_NPM_GLOBAL_PREFIX if exist "%QIANSI_NPM_GLOBAL_PREFIX%\arkcli.cmd" set "QIANSI_VOLCENGINE_CMD=%QIANSI_NPM_GLOBAL_PREFIX%\arkcli.cmd"
 if defined QIANSI_NPM_GLOBAL_PREFIX if not defined QIANSI_VOLCENGINE_CMD if exist "%QIANSI_NPM_GLOBAL_PREFIX%\arkcli.exe" set "QIANSI_VOLCENGINE_CMD=%QIANSI_NPM_GLOBAL_PREFIX%\arkcli.exe"
+exit /b 0
+
+:verifyGemini
+set "QIANSI_GEMINI_CMD="
+for /f "delims=" %%I in ('where.exe gemini.cmd 2^>nul') do if not defined QIANSI_GEMINI_CMD set "QIANSI_GEMINI_CMD=%%~fI"
+if defined QIANSI_GEMINI_CMD goto :runGeminiVersion
+for /f "delims=" %%I in ('where.exe gemini.exe 2^>nul') do if not defined QIANSI_GEMINI_CMD set "QIANSI_GEMINI_CMD=%%~fI"
+if defined QIANSI_GEMINI_CMD goto :runGeminiVersion
+set "QIANSI_NPM_GLOBAL_PREFIX="
+for /f "delims=" %%I in ('npm.cmd prefix --global 2^>nul') do if not defined QIANSI_NPM_GLOBAL_PREFIX set "QIANSI_NPM_GLOBAL_PREFIX=%%~fI"
+if defined QIANSI_NPM_GLOBAL_PREFIX if exist "%QIANSI_NPM_GLOBAL_PREFIX%\gemini.cmd" set "QIANSI_GEMINI_CMD=%QIANSI_NPM_GLOBAL_PREFIX%\gemini.cmd"
+if defined QIANSI_NPM_GLOBAL_PREFIX if not defined QIANSI_GEMINI_CMD if exist "%QIANSI_NPM_GLOBAL_PREFIX%\gemini.exe" set "QIANSI_GEMINI_CMD=%QIANSI_NPM_GLOBAL_PREFIX%\gemini.exe"
+if not defined QIANSI_GEMINI_CMD (
+  echo Gemini installation completed but gemini.cmd or gemini.exe was not found on PATH or under the npm global prefix.
+  exit /b 1
+)
+:runGeminiVersion
+call "%QIANSI_GEMINI_CMD%" --version
+if errorlevel 1 (
+  echo Gemini was installed but gemini --version could not run.
+  exit /b 1
+)
 exit /b 0
 
 :verifyCodex

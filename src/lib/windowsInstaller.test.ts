@@ -119,6 +119,23 @@ describe('Windows one-click installer', () => {
     expect(installAll?.indexOf('call :installVolcengineTool')).toBeLessThan(
       installAll?.indexOf('@openai/codex@latest') ?? -1,
     );
+    expect(installAll).toContain('call :verifyGemini');
+
+    const antigravity = installer.match(
+      /\r\n:installAntigravityTool\r\n([\s\S]*?)\r\n:installDreaminaTool\r\n/,
+    )?.[1];
+    const dreamina = installer.match(
+      /\r\n:installDreaminaTool\r\n([\s\S]*?)\r\n:installVolcengineTool\r\n/,
+    )?.[1];
+    expect(antigravity).toContain('has NOT been installed');
+    expect(dreamina).toContain('has NOT been installed');
+    expect(antigravity?.trimEnd().endsWith('exit /b 0')).toBe(true);
+    expect(dreamina?.trimEnd().endsWith('exit /b 0')).toBe(true);
+
+    expect(installer).toContain(':verifyGemini');
+    expect(installer).toContain('where.exe gemini.cmd 2^>nul');
+    expect(installer).toContain('npm.cmd prefix --global 2^>nul');
+    expect(installer).toContain('call "%QIANSI_GEMINI_CMD%" --version');
   });
 
   it('documents automatic installation and its safe failure behavior', () => {
@@ -127,6 +144,8 @@ describe('Windows one-click installer', () => {
     expect(guide).toContain('SHASUMS256.txt');
     expect(guide).toContain('tools/runtime/node/windows/');
     expect(guide).toContain('tools/cache/npm/');
+    expect(guide).toContain('安装器只把官方安装脚本下载到临时目录');
+    expect(guide).toContain('程序不会把远程响应直接交给 shell');
     expect(guide).toContain('不要删除整个 `data/`');
     expect(read('README.md')).toContain('无需单独配置系统 PATH');
     expect(read('README.md')).toContain('Qiansi-Canvas-windows.bat');

@@ -93,6 +93,9 @@ describe('macOS launch packages', () => {
     expect(cli).toContain('arkcli --version');
     expect(cli).toContain('arkcli auth login volc-sso');
     expect(cli).toContain('arkcli auth status');
+    expect(cli).toContain('mktemp "${TMPDIR:-/tmp}/qiansi-antigravity.XXXXXX"');
+    expect(cli).toContain('mktemp "${TMPDIR:-/tmp}/qiansi-dreamina.XXXXXX"');
+    expect(cli).not.toMatch(/mktemp[^\n]*XXXXXX\.(?:sh|cmd)/);
     expect(cli.indexOf('[1] 山火 CLI（火山方舟官方 Ark CLI）')).toBeLessThan(
       cli.indexOf('[2] 安装或更新 OpenAI Codex CLI'),
     );
@@ -106,6 +109,12 @@ describe('macOS launch packages', () => {
     expect(installAll?.indexOf('install_volcengine')).toBeLessThan(
       installAll?.indexOf('install_codex') ?? -1,
     );
+    const antigravity = cli.match(/\ninstall_antigravity\(\) \{\n([\s\S]*?)\n\}/)?.[1];
+    const dreamina = cli.match(/\ninstall_dreamina\(\) \{\n([\s\S]*?)\n\}/)?.[1];
+    expect(antigravity).toContain('return 0');
+    expect(dreamina).toContain('return 0');
+    expect(antigravity).toContain('尚未安装');
+    expect(dreamina).toContain('尚未安装');
     expect(cli).not.toMatch(/curl[^\n]*\|[^\n]*(?:bash|sh)/);
     expect(cli).not.toMatch(/(?:bash|sh)\s+"\$installer"/);
     const windows = read('tools/launchers/qiansi-install.bat');

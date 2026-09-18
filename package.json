@@ -1,7 +1,7 @@
 {
   "name": "qiansi-canvas",
   "private": true,
-  "version": "1.64.10",
+  "version": "1.64.13",
   "author": "holder (老树苗)",
   "license": "GPL-3.0-or-later OR LicenseRef-Qiansi-Commercial",
   "type": "module",
